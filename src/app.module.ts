@@ -12,6 +12,7 @@ import { ChatModule } from './chat/chat.module';
 import { WinstonModule } from 'nest-winston';
 import { winstonLoggerConfig } from './common/logger';
 import { ExceptionsFilter } from './common/exception-filter';
+import { Authentication } from './common/auth';
 
 @Module({
     imports: [
@@ -41,7 +42,12 @@ import { ExceptionsFilter } from './common/exception-filter';
         WinstonModule.forRoot(winstonLoggerConfig),
         ChatModule,
     ],
+    // Globally providers: order matters here, they will apply in the order they're declared
     providers: [
+        {
+            provide: APP_GUARD,
+            useClass: Authentication,
+        },
         {
             provide: APP_GUARD,
             useClass: ThrottlerGuard,
