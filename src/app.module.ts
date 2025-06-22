@@ -25,7 +25,7 @@ import { ExceptionsFilter } from './common/exception-filter';
             imports: [ConfigModule],
             inject: [ConfigService],
             useFactory: (config: ConfigService): ThrottlerModuleOptions => {
-                const ttl = config.get<number>('THROTTLE_TTL'); // 60000 in milliseconds = 60 seconds
+                const ttl = config.get<number>('THROTTLE_TTL'); // 60000 milliseconds = 60 seconds
                 const limit = config.get<number>('THROTTLE_LIMIT'); // 1
                 console.log('TTL:', ttl, 'LIMIT:', limit);
                 if (ttl === undefined || limit === undefined) {
