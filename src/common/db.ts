@@ -3,14 +3,31 @@ import { ConfigService } from '@nestjs/config';
 
 export const typeOrmConfig = (
     configService: ConfigService,
-): TypeOrmModuleOptions => ({
-    type: 'postgres',
-    url: configService.get<string>('DATABASE_URL'),
-    // host: configService.get('DB_HOST'),
-    // port: configService.get<number>('DB_PORT'),
-    // username: configService.get('DB_USER'),
-    // password: configService.get('DB_PASS'),
-    // database: configService.get('DB_NAME'),
-    autoLoadEntities: true,
-    synchronize: true, // Set to false in production
-});
+): TypeOrmModuleOptions => {
+    const host = configService.get<string>('DB_HOST');
+    const port = configService.get<number>('DB_PORT');
+    const username = configService.get<string>('DB_USER');
+    const password = configService.get<string>('DB_PASS');
+    const db = configService.get<string>('DB_NAME');
+
+    console.log('🌐 Connecting to DB:', {
+        host,
+        port,
+        username,
+        password,
+        db,
+    });
+
+    return {
+        type: 'postgres',
+        host,
+        port,
+        username,
+        password,
+        database: db,
+        autoLoadEntities: true,
+        synchronize: false,
+        retryAttempts: 10,
+        retryDelay: 3000,
+    };
+};

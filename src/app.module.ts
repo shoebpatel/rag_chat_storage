@@ -19,8 +19,8 @@ import { Authentication } from './common/auth';
         ConfigModule.forRoot({ isGlobal: true }),
         TypeOrmModule.forRootAsync({
             imports: [ConfigModule],
-            useFactory: typeOrmConfig,
             inject: [ConfigService],
+            useFactory: typeOrmConfig,
         }),
         ThrottlerModule.forRootAsync({
             imports: [ConfigModule],
