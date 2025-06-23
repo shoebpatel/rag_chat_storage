@@ -1,0 +1,22 @@
+services:
+  api:
+    build: .
+    container_name: rag-chat-api
+    ports:
+      - "3000:3000"
+    env_file: .env
+    depends_on:
+      - db
+    restart: always
+  db:
+    image: postgres:15
+    container_name: rag-chat-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: rag_chat
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
