@@ -6,10 +6,14 @@ import { ChatMessage } from './entities/chat-message';
 import { CreateSessionValidations } from './validations/create-session';
 import { CreateMessageValidations } from './validations/create-message';
 import { UpdateSessionValidations } from './validations/update-session';
+import { Users } from './entities/users';
 
 @Injectable()
 export class ChatService {
     constructor(
+        @InjectRepository(Users)
+        private userRepo: Repository<Users>,
+
         @InjectRepository(ChatSession)
         private sessionRepo: Repository<ChatSession>,
 
@@ -22,7 +26,14 @@ export class ChatService {
         return await this.sessionRepo.findOneBy({ id: sessionId });
     }
 
+    async findUser(userId: string) {
+        console.log('🚀 ~ ChatService ~ findUser ~ userId:', userId);
+        return await this.userRepo.findOneBy({ Id: userId });
+    }
+
     async createSession(validation: CreateSessionValidations) {
+        const user = await this.findUser(validation.userId);
+        if (!user) throw new NotFoundException('User not found');
         const session = this.sessionRepo.create({
             userId: validation.userId,
             title: validation.title,

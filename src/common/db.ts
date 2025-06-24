@@ -26,7 +26,7 @@ export const typeOrmConfig = (
         password,
         database: db,
         autoLoadEntities: true,
-        synchronize: false,
+        synchronize: true, //false in production
         retryAttempts: 10,
         retryDelay: 3000,
     };
