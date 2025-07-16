@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { ChatController } from './chat.controller';
 import { ChatService } from './chat.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ChatSession } from './entities/chat-session';
-import { ChatMessage } from './entities/chat-message';
-import { Users } from './entities/users';
+import { ChatSession } from '../database/schema/sessions';
+import { ChatMessage } from '../database/schema/messages';
+import { Users } from '../database/schema/users';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Users, ChatSession, ChatMessage])],

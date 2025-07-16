@@ -5,7 +5,7 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ChatSession } from './chat-session';
+import { ChatSession } from './sessions';
 
 @Entity()
 export class ChatMessage {

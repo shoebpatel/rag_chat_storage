@@ -8,33 +8,20 @@ import {
     Post,
     Query,
     Injectable,
-    LoggerService,
-    Inject,
-    // UseGuards,
 } from '@nestjs/common';
 import { ChatService } from './chat.service';
-import { CreateSessionValidations } from './validations/create-session';
-import { CreateMessageValidations } from './validations/create-message';
-// import { Authentication } from '../common/auth';
-import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
-import { UpdateSessionValidations } from './validations/update-session';
-// import { Throttle } from '@nestjs/throttler';
+import { CreateSessionValidations } from './dto/create-session';
+import { CreateMessageValidations } from './dto/create-message';
+import { UpdateSessionValidations } from './dto/update-session';
 
 @Controller('chat')
-// @UseGuards(Authentication)
 @Injectable()
 export class ChatController {
-    constructor(
-        private readonly chatService: ChatService,
-        @Inject(WINSTON_MODULE_NEST_PROVIDER)
-        private readonly logger: LoggerService,
-    ) {}
+    constructor(private readonly chatService: ChatService) {}
 
     @Post('sessions')
     // @Throttle({ default: { limit: 0, ttl: 6000000 } })
     createSession(@Body() session: CreateSessionValidations) {
-        // throw new Error('Exception has been thrown');
-        this.logger.log(`Creating session for user ${session.userId}`);
         return this.chatService.createSession(session);
     }
 

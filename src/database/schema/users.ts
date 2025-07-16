@@ -1,16 +1,29 @@
 import {
+    Column,
     CreateDateColumn,
     Entity,
     OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { ChatSession } from './chat-session';
+import { ChatSession } from './sessions';
 
 @Entity()
 export class Users {
     @PrimaryGeneratedColumn('uuid')
-    Id: string;
+    id: string;
+
+    @Column()
+    name: string;
+
+    @Column()
+    role: string;
+
+    @Column({ unique: true })
+    email: string;
+
+    @Column()
+    password: string;
 
     @OneToMany(() => ChatSession, (session) => session.id, {
         cascade: true,

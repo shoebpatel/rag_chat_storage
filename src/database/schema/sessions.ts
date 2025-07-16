@@ -7,7 +7,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { ChatMessage } from './chat-message';
+import { ChatMessage } from './messages';
 import { Users } from './users';
 
 @Entity()
@@ -24,7 +24,7 @@ export class ChatSession {
     @Column({ default: false })
     isFavorite: boolean;
 
-    @ManyToOne(() => Users, (user) => user.Id, {
+    @ManyToOne(() => Users, (user) => user.id, {
         onDelete: 'CASCADE',
     })
     user: Users;

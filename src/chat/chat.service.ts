@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ChatSession } from './entities/chat-session';
-import { ChatMessage } from './entities/chat-message';
-import { CreateSessionValidations } from './validations/create-session';
-import { CreateMessageValidations } from './validations/create-message';
-import { UpdateSessionValidations } from './validations/update-session';
-import { Users } from './entities/users';
+import { ChatSession } from '../database/schema/sessions';
+import { ChatMessage } from '../database/schema/messages';
+import { CreateSessionValidations } from './dto/create-session';
+import { CreateMessageValidations } from './dto/create-message';
+import { UpdateSessionValidations } from './dto/update-session';
+import { Users } from '../database/schema/users';
 
 @Injectable()
 export class ChatService {
@@ -28,7 +28,7 @@ export class ChatService {
 
     async findUser(userId: string) {
         console.log('🚀 ~ ChatService ~ findUser ~ userId:', userId);
-        return await this.userRepo.findOneBy({ Id: userId });
+        return await this.userRepo.findOneBy({ id: userId });
     }
 
     async createSession(validation: CreateSessionValidations) {

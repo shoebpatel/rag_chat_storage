@@ -1,56 +1,26 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import {
-    ThrottlerModule,
-    ThrottlerGuard,
-    ThrottlerModuleOptions,
-} from '@nestjs/throttler';
+import { ConfigModule } from '@nestjs/config';
+import { AuthGuard } from './common/guard/auth.guard';
+import { ExceptionsFilter } from './common/filter/exception.filter';
+import { DatabaseModule } from './database/database.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
+// import { ChatModule } from './chat/chat.module';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
-import { typeOrmConfig } from './common/db';
-import { ChatModule } from './chat/chat.module';
-import { WinstonModule } from 'nest-winston';
-import { winstonLoggerConfig } from './common/logger';
-import { ExceptionsFilter } from './common/exception-filter';
-import { Authentication } from './common/auth';
 
 @Module({
     imports: [
         ConfigModule.forRoot({ isGlobal: true }),
-        TypeOrmModule.forRootAsync({
-            imports: [ConfigModule],
-            inject: [ConfigService],
-            useFactory: typeOrmConfig,
-        }),
-        ThrottlerModule.forRootAsync({
-            imports: [ConfigModule],
-            inject: [ConfigService],
-            useFactory: (config: ConfigService): ThrottlerModuleOptions => {
-                const ttl = config.get<number>('THROTTLE_TTL'); // 60000 milliseconds = 60 seconds
-                const limit = config.get<number>('THROTTLE_LIMIT'); // 1
-                console.log('TTL:', ttl, 'LIMIT:', limit);
-                if (ttl === undefined || limit === undefined) {
-                    throw new Error(
-                        'THROTTLE_TTL or THROTTLE_LIMIT not defined',
-                    );
-                }
-                return {
-                    throttlers: [{ ttl, limit }],
-                };
-            },
-        }),
-        WinstonModule.forRoot(winstonLoggerConfig),
-        ChatModule,
+        DatabaseModule,
+        AuthModule,
+        UserModule,
+        // ChatModule,
     ],
-    // Globally providers: order matters here, they will apply in the order they're declared
+    // Global providers: order matters here, they will apply in the order they're declared
     providers: [
         {
             provide: APP_GUARD,
-            useClass: Authentication,
-        },
-        {
-            provide: APP_GUARD,
-            useClass: ThrottlerGuard,
+            useClass: AuthGuard,
         },
         {
             provide: APP_FILTER,
