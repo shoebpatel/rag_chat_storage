@@ -25,11 +25,13 @@ export class MessageController {
         @Param('id') sessionId: string,
         @Query('page') page = '1',
         @Query('limit') limit = '10',
+        @User('id') userId,
     ) {
         return this.messageService.getMessages(
             sessionId,
             parseInt(page),
             parseInt(limit),
+            userId,
         );
     }
 }

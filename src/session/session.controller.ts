@@ -49,7 +49,7 @@ export class SessionController {
 
     @Delete(':id')
     async deleteSession(
-        @User('sessionId') sessionId,
+        @Param('id') sessionId: string,
         @User('id') userId: string,
     ) {
         return await this.sessionService.deleteSession(sessionId, userId);

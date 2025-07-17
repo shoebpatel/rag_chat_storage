@@ -28,9 +28,9 @@ export class MessageService {
         return this.messageRepo.save(message);
     }
     // Fetch messageHistories for a session, ordered by time
-    async getMessages(sessionId: string, page = 1, limit = 10) {
+    async getMessages(sessionId: string, page = 1, limit = 10, userId) {
         const [messageHistories, count] = await this.messageRepo.findAndCount({
-            where: { session: { id: sessionId } },
+            where: { session: { id: sessionId, userId } },
             order: { createdAt: 'ASC' },
             skip: (page - 1) * limit,
             take: limit,
