@@ -49,4 +49,18 @@ export class UserService {
             );
         }
     }
+
+    async getUserById(userId: string) {
+        try {
+            return await this.userRepo.findOneBy({ id: userId });
+        } catch (error) {
+            if (error instanceof HttpException) {
+                throw error;
+            }
+            throw new HttpException(
+                { message: 'Error fetching user' },
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            );
+        }
+    }
 }

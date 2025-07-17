@@ -7,11 +7,11 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { ChatMessage } from './messages';
+import { Message } from './messages';
 import { Users } from './users';
 
 @Entity()
-export class ChatSession {
+export class Session {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -29,10 +29,10 @@ export class ChatSession {
     })
     user: Users;
 
-    @OneToMany(() => ChatMessage, (message) => message.session, {
+    @OneToMany(() => Message, (message) => message.session, {
         cascade: true,
     })
-    messages: ChatMessage[];
+    messages: Message[];
 
     @CreateDateColumn()
     createdAt: Date;

@@ -1,18 +1,13 @@
-import {
-    Controller,
-    Param,
-    Get,
-    HttpException,
-    HttpStatus,
-} from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
 import { UserService } from './user.service';
+import { User } from 'src/common/decorator/user.decorator';
 
 @Controller('user')
 export class UserController {
     constructor(private userService: UserService) {}
-    @Get('me/:email')
-    async getUserByEmailId(@Param('email') email: string) {
-        const user = await this.userService.getUserByEmailId(email);
+    @Get('me')
+    async getUserByEmailId(@User('id') userId: string) {
+        const user = await this.userService.getUserById(userId);
         if (!user) {
             throw new HttpException(
                 { message: 'User not found' },

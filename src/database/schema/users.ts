@@ -6,7 +6,7 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { ChatSession } from './sessions';
+import { Session } from './sessions';
 
 @Entity()
 export class Users {
@@ -25,10 +25,10 @@ export class Users {
     @Column()
     password: string;
 
-    @OneToMany(() => ChatSession, (session) => session.id, {
+    @OneToMany(() => Session, (session) => session.id, {
         cascade: true,
     })
-    sessions: ChatSession[];
+    sessions: Session[];
 
     @CreateDateColumn()
     createdAt: Date;

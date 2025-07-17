@@ -1,6 +1,6 @@
 import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
-export class UpdateSessionValidations {
+export class UpdateSessionDTO {
     @IsOptional()
     @IsString()
     title?: string;

@@ -5,8 +5,9 @@ import { ExceptionsFilter } from './common/filter/exception.filter';
 import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
-// import { ChatModule } from './chat/chat.module';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
+import { SessionModule } from './session/session.module';
+import { MessageModule } from './message/message.module';
 
 @Module({
     imports: [
@@ -14,7 +15,8 @@ import { APP_FILTER, APP_GUARD } from '@nestjs/core';
         DatabaseModule,
         AuthModule,
         UserModule,
-        // ChatModule,
+        SessionModule,
+        MessageModule,
     ],
     // Global providers: order matters here, they will apply in the order they're declared
     providers: [

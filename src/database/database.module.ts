@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Users } from './schema/users';
-import { ChatSession } from './schema/sessions';
-import { ChatMessage } from './schema/messages';
+import { Session } from './schema/sessions';
+import { Message } from './schema/messages';
 
 @Module({
     imports: [
@@ -25,7 +25,7 @@ import { ChatMessage } from './schema/messages';
                 };
             },
         }),
-        TypeOrmModule.forFeature([Users, ChatSession, ChatMessage]),
+        TypeOrmModule.forFeature([Users, Session, Message]),
     ],
     exports: [TypeOrmModule],
 })

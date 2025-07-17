@@ -5,17 +5,17 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ChatSession } from './sessions';
+import { Session } from './sessions';
 
 @Entity()
-export class ChatMessage {
+export class Message {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @ManyToOne(() => ChatSession, (session) => session.messages, {
+    @ManyToOne(() => Session, (session) => session.messages, {
         onDelete: 'CASCADE',
     })
-    session: ChatSession;
+    session: Session;
 
     @Column()
     sender: 'user' | 'assistant';
