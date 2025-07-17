@@ -12,8 +12,12 @@ export class MessageService {
         private messageRepo: Repository<Message>,
         private sessionService: SessionService,
     ) {}
-    async addMessage(validation: CreateMessageDTO, sessionId) {
-        const session = await this.sessionService.findSession(sessionId);
+    async addMessage(validation: CreateMessageDTO, sessionId, userId) {
+        const session =
+            await this.sessionService.findSessionByUserIdAndSessionId(
+                sessionId,
+                userId,
+            );
         if (!session) throw new NotFoundException('Session not found');
         const message = this.messageRepo.create({
             session,
@@ -23,7 +27,6 @@ export class MessageService {
         });
         return this.messageRepo.save(message);
     }
-
     // Fetch messageHistories for a session, ordered by time
     async getMessages(sessionId: string, page = 1, limit = 10) {
         const [messageHistories, count] = await this.messageRepo.findAndCount({

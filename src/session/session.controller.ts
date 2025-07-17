@@ -27,20 +27,31 @@ export class SessionController {
     }
 
     @Get(':id')
-    async getSession(@Param('id') sessionId: string) {
-        return await this.sessionService.findSession(sessionId);
+    async getSession(
+        @Param('id') sessionId: string,
+        @User('id') userId: string,
+    ) {
+        return await this.sessionService.findSession(sessionId, userId);
     }
 
     @Put(':id')
     async renameSession(
         @Param('id') sessionId: string,
         @Body() session: UpdateSessionDTO,
+        @User('id') userId: string,
     ) {
-        return await this.sessionService.updateSession(sessionId, session);
+        return await this.sessionService.updateSession(
+            sessionId,
+            session,
+            userId,
+        );
     }
 
     @Delete(':id')
-    async deleteSession(@User('sessionId') sessionId) {
-        return await this.sessionService.deleteSession(sessionId);
+    async deleteSession(
+        @User('sessionId') sessionId,
+        @User('id') userId: string,
+    ) {
+        return await this.sessionService.deleteSession(sessionId, userId);
     }
 }

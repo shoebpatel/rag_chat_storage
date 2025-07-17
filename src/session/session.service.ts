@@ -17,8 +17,12 @@ export class SessionService {
         return await this.sessionRepo.findBy({ userId });
     }
 
-    async findSession(sessionId: string) {
-        return await this.sessionRepo.findOneBy({ id: sessionId });
+    async findSession(sessionId: string, userId: string) {
+        return await this.sessionRepo.findOneBy({ id: sessionId, userId });
+    }
+
+    async findSessionByUserIdAndSessionId(sessionId: string, userId: string) {
+        return await this.sessionRepo.findOneBy({ id: sessionId, userId });
     }
 
     async createSession(title, userId) {
@@ -31,8 +35,8 @@ export class SessionService {
         return this.sessionRepo.save(session);
     }
 
-    async updateSession(sessionId: string, data: UpdateSessionDTO) {
-        const session = await this.findSession(sessionId);
+    async updateSession(sessionId: string, data: UpdateSessionDTO, userId) {
+        const session = await this.findSession(sessionId, userId);
         if (!session)
             throw new NotFoundException({ message: 'Session not found' });
         const { title, isFavorite } = data;
@@ -42,8 +46,8 @@ export class SessionService {
         return this.sessionRepo.save(session);
     }
 
-    async deleteSession(sessionId: string) {
-        const session = await this.findSession(sessionId);
+    async deleteSession(sessionId: string, userId) {
+        const session = await this.findSession(sessionId, userId);
         if (!session)
             throw new NotFoundException({ message: 'Session not found' });
         return this.sessionRepo.remove(session);
