@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { Session } from '../database/schema/sessions';
+import { Session } from '../database/schema/sessions.entity';
 import { UpdateSessionDTO } from 'src/common/dto/update-session';
 import { UserService } from 'src/user/user.service';
 import { InjectRepository } from '@nestjs/typeorm';

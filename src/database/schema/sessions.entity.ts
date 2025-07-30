@@ -7,8 +7,8 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import { Message } from './messages';
-import { Users } from './users';
+import { Message } from './messages.entity';
+import { Users } from './users.entity';
 
 @Entity()
 export class Session {

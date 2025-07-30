@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Users } from './schema/users';
-import { Session } from './schema/sessions';
-import { Message } from './schema/messages';
+import { Users } from './schema/users.entity';
+import { Session } from './schema/sessions.entity';
+import { Message } from './schema/messages.entity';
 
 @Module({
     imports: [
@@ -19,9 +19,10 @@ import { Message } from './schema/messages';
                     password: configService.get<string>('DB_PASS'),
                     database: configService.get<string>('DB_NAME'),
                     autoLoadEntities: true,
-                    synchronize: true, // false in production
                     retryAttempts: 10,
                     retryDelay: 3000,
+                    migrations: ['src/database/migrations/*.ts'],
+                    synchronize: true, // false in production
                 };
             },
         }),

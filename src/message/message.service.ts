@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateMessageDTO } from 'src/common/dto/create-message';
-import { Message } from 'src/database/schema/messages';
+import { Message } from 'src/database/schema/messages.entity';
 import { SessionService } from 'src/session/session.service';
 import { Repository } from 'typeorm';
 

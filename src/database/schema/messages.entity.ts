@@ -5,7 +5,7 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Session } from './sessions';
+import { Session } from './sessions.entity';
 
 @Entity()
 export class Message {
